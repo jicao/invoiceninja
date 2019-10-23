@@ -817,7 +817,11 @@ class Invoice extends EntityModel implements BalanceAffecting
      */
     public static function calcLink($invoice)
     {
-        return link_to('invoices/' . $invoice->public_id, $invoice->invoice_number);
+        if(isset($invoice->invoice_type_id))
+            $linkPrefix = ($invoice->invoice_type_id == INVOICE_TYPE_QUOTE) ? 'quotes/' : 'invoices/';
+        else
+            $linkPrefix = 'invoices/';
+        return link_to($linkPrefix . $invoice->public_id, $invoice->invoice_number);
     }
 
     /**
@@ -1298,7 +1302,9 @@ class Invoice extends EntityModel implements BalanceAffecting
 
         if ($this->discount != 0) {
             if ($this->is_amount_discount) {
-                $total -= $invoiceTotal ? ($total / ($invoiceTotal + $this->discount) * $this->discount) : 0;
+                if ($invoiceTotal + $this->discount != 0) {
+                    $total -= $invoiceTotal ? ($total / ($invoiceTotal + $this->discount) * $this->discount) : 0;
+                }
             } else {
                 $total *= (100 - $this->discount) / 100;
             }

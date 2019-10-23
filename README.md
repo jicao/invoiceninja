@@ -19,21 +19,14 @@ The self-host zip includes all third party libraries whereas downloading the cod
 * [Videos](https://www.youtube.com/channel/UCXAHcBvhW05PDtWYIq7WDFA/videos)
 * [User Guide](https://invoice-ninja.readthedocs.io/en/latest/)
 * [Support Forum](https://www.invoiceninja.com/forums/forum/support/)
-* [Roadmap](https://trello.com/b/63BbiVVe/)
 
-## Affiliates Programs
-* Referral Program (we pay you)
-	* $100 per sign up paid over 3 years - [Learn more](https://www.invoiceninja.com/referral-program/)
-* White-Label Reseller (you pay us)
-	* Hosted: $500 annually and either 10% of revenue or $1/user/month
-	* Self-Hosted: Contact us for volume license pricing
+## Referral Program
+* Earn 50% of Pro & Enterprise Plans up to 4 years - [Learn more](https://www.invoiceninja.com/referral-program/)
 
-## Mobile Apps
-* Current
-    * [iPhone](https://itunes.apple.com/WebObjects/MZStore.woa/wa/viewSoftware?id=1220337560&mt=8)
-    * [Android](https://play.google.com/store/apps/details?id=com.invoiceninja.invoiceninja)
-* Upcoming
-    * [iPhone/Android](https://github.com/invoiceninja/flutter-mobile)
+## Mobile App
+* [iPhone](https://itunes.apple.com/us/app/invoice-ninja/id1435514417?ls=1&mt=8)
+* [Android](https://play.google.com/store/apps/details?id=com.invoiceninja.flutter)
+* [Source Code](https://github.com/invoiceninja/flutter-mobile)
 
 ## Installation Options
 * [Ansible](https://github.com/invoiceninja/ansible-installer)
@@ -41,6 +34,7 @@ The self-host zip includes all third party libraries whereas downloading the cod
 * [Docker File](https://hub.docker.com/r/invoiceninja/invoiceninja/)
 * [Cloudron](https://cloudron.io/store/com.invoiceninja.cloudronapp.html)
 * [Softaculous](https://www.softaculous.com/apps/ecommerce/Invoice_Ninja)
+* [Lando](https://github.com/invoiceninja/invoiceninja/issues/2880)
 
 ## Recommended Providers
 * [Stripe](https://stripe.com/)
@@ -64,7 +58,7 @@ The self-host zip includes all third party libraries whereas downloading the cod
 * [Shopping Cart](https://github.com/Scifabric/invoiceninjashoppingcart)
 
 ## Third Party Developers
-* [Some Techie](https://www.sometechie.com/customize-invoice-ninja/)
+* [Bold Compass](https://boldcompass.com/customize-invoice-ninja/)
 
 ## Contributing
 All contributors are welcome!  
@@ -79,11 +73,15 @@ For information on how contribute to Invoice Ninja, please see our [contributing
 * [Troels Liebe Bentsen](https://github.com/tlbdk)
 * [Jeramy Simpson](https://github.com/JeramyMywork) - [MyWork](https://www.mywork.com.au)
 * [Sigitas Limontas](https://lt.linkedin.com/in/sigitaslimontas)
-* [Joshua Dwire](https://github.com/joshuadwire) - [Some Techie](https://www.sometechie.com)
+* [Joshua Dwire](https://github.com/joshuadwire) - [Bold Compass](https://boldcompass.com/)
 * [Holger Lösken](https://github.com/codedge) - [codedge](http://codedge.de)
 * [Samuel Laulhau](https://github.com/lalop) - [Lalop](http://lalop.co/)
 * [Alexander Zamponi](https://github.com/alexz707)
 * [Matthieu Calie](https://github.com/Matth--)
+* [Christopher Di Carlo](https://github.com/dicarlosystems) - [Di Carlo Systems Inc.](https://www.dicarlosystems.ca)
+* [Kristian Feldsam](https://github.com/feldsam) - [FeldHost™](https://www.feldhost.net)
+* [Suhas Sunil Gaikwad](https://github.com/Suhas-Gaikwad)
+* [Mike Skaggs](https://github.com/titan-fail)
 
 ## License
 Invoice Ninja is released under the Attribution Assurance License.  

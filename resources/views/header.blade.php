@@ -419,11 +419,11 @@
                 'expenses',
                 'vendors',
             ] as $option)
-            @if (in_array($option, ['dashboard', 'settings'])
-                || Auth::user()->can('view', substr($option, 0, -1))
-                || Auth::user()->can('create', substr($option, 0, -1)))
-                @include('partials.navigation_option')
-            @endif
+                @if(!Auth::user()->account->isModuleEnabled(substr($option, 0, -1)))
+                    {{ '' }}
+                @else
+                    @include('partials.navigation_option')
+                @endif
             @endforeach
             @if ( ! Utils::isNinjaProd())
                 @foreach (Module::collections() as $module)
@@ -503,7 +503,7 @@
           </div>
 
           @if (!isset($showBreadcrumbs) || $showBreadcrumbs)
-            {!! Form::breadcrumbs((! empty($entity) && $entity->exists) ? $entity->present()->statusLabel : false) !!}
+            {!! Form::breadcrumbs((! empty($entity) && $entity->exists && !$entity->deleted_at) ? $entity->present()->statusLabel : false) !!}
           @endif
 
           @yield('content')
@@ -535,7 +535,7 @@
 @include('partials.sign_up')
 @include('partials.keyboard_shortcuts')
 
-@if (auth()->check() && ! auth()->user()->hasAcceptedLatestTerms())
+@if (auth()->check() && auth()->user()->registered && ! auth()->user()->hasAcceptedLatestTerms())
     @include('partials.accept_terms')
 @endif
 

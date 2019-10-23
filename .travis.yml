@@ -1,5 +1,8 @@
 language: php
 
+services:
+  - mysql
+
 sudo: true
 
 # Prevent tests from taking more than 50 minutes

@@ -373,14 +373,6 @@ class InvoiceRepository extends BaseRepository
         /** @var Account $account */
         $account = $invoice ? $invoice->account : \Auth::user()->account;
         $publicId = isset($data['public_id']) ? $data['public_id'] : false;
-
-        if (Utils::isNinjaProd() && ! Utils::isReseller()) {
-            $copy = json_decode( json_encode($data), true);
-            $copy['data'] = false;
-            $logMessage = date('r') . ' account_id: ' . $account->id . ' ' . json_encode($copy) . "\n\n";
-            @file_put_contents(storage_path('logs/invoice-repo.log'), $logMessage, FILE_APPEND);
-        }
-
         $isNew = ! $publicId || intval($publicId) < 0;
 
         if ($invoice) {
@@ -737,7 +729,7 @@ class InvoiceRepository extends BaseRepository
                     if ($account->update_products
                         && ! $invoice->has_tasks
                         && ! $invoice->has_expenses
-                        && ! in_array($productKey, Utils::trans(['surcharge', 'discount', 'fee']))
+                        && ! in_array($productKey, Utils::trans(['surcharge', 'discount', 'fee', 'gateway_fee_item']))
                     ) {
                         $product = Product::findProductByKey($productKey);
                         if (! $product) {
@@ -830,7 +822,6 @@ class InvoiceRepository extends BaseRepository
 
         foreach ($client->contacts as $contact) {
             $invitation = Invitation::scope()->whereContactId($contact->id)->whereInvoiceId($invoice->id)->first();
-
             if (in_array($contact->id, $sendInvoiceIds) && ! $invitation) {
                 $invitation = Invitation::createNew($invoice);
                 $invitation->invoice_id = $invoice->id;
@@ -912,6 +903,7 @@ class InvoiceRepository extends BaseRepository
           'terms',
           'invoice_footer',
           'public_notes',
+          'private_notes',
           'invoice_design_id',
           'tax_name1',
           'tax_rate1',
@@ -932,6 +924,7 @@ class InvoiceRepository extends BaseRepository
 
         if ($quoteId) {
             $clone->invoice_type_id = INVOICE_TYPE_STANDARD;
+            $clone->invoice_design_id = $account->invoice_design_id;
             $clone->quote_id = $quoteId;
             if ($account->invoice_terms) {
                 $clone->terms = $account->invoice_terms;
@@ -1322,6 +1315,11 @@ class InvoiceRepository extends BaseRepository
 
         $data = $invoice->toArray();
         $fee = $invoice->calcGatewayFee($gatewayTypeId);
+
+        if ($fee == 0) {
+            return;
+        }
+
         $date = $account->getDateTime()->format($account->getCustomDateFormat());
         $feeItemLabel = $account->getLabel('gateway_fee_item') ?: ($fee >= 0 ? trans('texts.surcharge') : trans('texts.discount'));
 

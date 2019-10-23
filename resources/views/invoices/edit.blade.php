@@ -14,6 +14,7 @@
 
         #scrollable-dropdown-menu .tt-menu {
             max-height: 150px;
+            width: 300px;
             overflow-y: auto;
             overflow-x: hidden;
         }
@@ -75,6 +76,8 @@
 		@if ($invoice->is_recurring && $invoice->isSent())
 			@if (! $invoice->last_sent_date || $invoice->last_sent_date == '0000-00-00')
 				{!! $invoice->present()->statusLabel(trans('texts.pending')) !!}
+			@elseif ($invoice->end_date && Carbon::parse(Utils::toSqlDate($invoice->end_date))->isPast())
+				{!! $invoice->present()->statusLabel(trans('texts.status_completed')) !!}
 			@else
 				{!! $invoice->present()->statusLabel(trans('texts.active')) !!}
 			@endif
@@ -218,9 +221,9 @@
 			<div data-bind="visible: is_recurring" style="display: none">
 				{!! Former::select('frequency_id')->label('frequency')->options($frequencies)->data_bind("value: frequency_id")
                         ->appendIcon('question-sign')->addGroupClass('frequency_id')->onchange('onFrequencyChange()') !!}
-				{!! Former::text('start_date')->data_bind("datePicker: start_date, valueUpdate: 'afterkeydown'")->data_date_start_date($invoice->id ? false : $account->formatDate($account->getDateTime()))
+				{!! Former::text('start_date')->data_bind("datePicker: start_date, valueUpdate: 'afterkeydown'")
 							->data_date_format(Session::get(SESSION_DATE_PICKER_FORMAT, DEFAULT_DATE_PICKER_FORMAT))->appendIcon('calendar')->addGroupClass('start_date') !!}
-				{!! Former::text('end_date')->data_bind("datePicker: end_date, valueUpdate: 'afterkeydown'")->data_date_start_date($invoice->id ? false : $account->formatDate($account->getDateTime()))
+				{!! Former::text('end_date')->data_bind("datePicker: end_date, valueUpdate: 'afterkeydown'")
 							->data_date_format(Session::get(SESSION_DATE_PICKER_FORMAT, DEFAULT_DATE_PICKER_FORMAT))->appendIcon('calendar')->addGroupClass('end_date') !!}
                 {!! Former::select('recurring_due_date')->label(trans('texts.due_date'))->options($recurringDueDates)->data_bind("value: recurring_due_date")->appendIcon('question-sign')->addGroupClass('recurring_due_date') !!}
 			</div>
@@ -664,6 +667,7 @@
                             ->data_bind("value: postal_code, valueUpdate: 'afterkeydown'") !!}
                     {!! Former::select('client[country_id]')
                             ->label(trans('texts.country_id'))
+                            ->autocomplete('off')
                             ->addOption('','')->addGroupClass('country_select')
                             ->fromQuery($countries, 'name', 'id')
 							->data_bind("dropdown: country_id") !!}
@@ -1036,7 +1040,7 @@
 		}
 		@endcan
 
-		$('#invoice_footer, #terms, #public_notes, #invoice_number, #invoice_date, #due_date, #partial_due_date, #start_date, #po_number, #discount, #currency_id, #invoice_design_id, #recurring, #is_amount_discount, #partial, #custom_text_value1, #custom_text_value2').change(function() {
+		$('#invoice_footer, #terms, #public_notes, #invoice_number, #invoice_date, #due_date, #partial_due_date, #start_date, #po_number, #discount, #currency_id, #invoice_design_id, #recurring, #is_amount_discount, #partial, #custom_text_value1, #custom_text_value2, #taxRateSelect1, #taxRateSelect2').change(function() {
             $('#downloadPdfButton').attr('disabled', true);
 			setTimeout(function() {
 				refreshPDF(true);

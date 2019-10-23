@@ -54,7 +54,7 @@ class Task extends EntityModel
      */
     public function invoice()
     {
-        return $this->belongsTo('App\Models\Invoice');
+        return $this->belongsTo('App\Models\Invoice')->withTrashed();
     }
 
     /**
@@ -154,7 +154,7 @@ class Task extends EntityModel
             $duration += max($endTime - $startTime, 0);
         }
 
-        return $duration;
+        return round($duration);
     }
 
     /**

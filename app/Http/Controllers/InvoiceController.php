@@ -192,6 +192,10 @@ class InvoiceController extends BaseController
             }
         }
 
+        if (Auth::user()->registered && ! Auth::user()->confirmed) {
+            session()->flash('warning', trans('texts.confirmation_required', ['link' => link_to('/resend_confirmation', trans('texts.click_here'))]));
+        }
+
         return View::make('invoices.edit', $data);
     }
 
@@ -302,7 +306,7 @@ class InvoiceController extends BaseController
 
         // Check for any taxes which have been deleted
         $taxRateOptions = $account->present()->taxRateOptions;
-        if ($invoice->exists) {
+        if ($invoice->exists && !$invoice->deleted_at) {
             foreach ($invoice->getTaxes() as $key => $rate) {
                 $key = '0 ' . $key; // mark it as a standard exclusive rate option
                 if (isset($taxRateOptions[$key])) {

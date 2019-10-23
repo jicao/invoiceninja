@@ -61,7 +61,7 @@ class InvoiceApiController extends BaseAPIController
         $invoices = Invoice::scope()
                         ->withTrashed()
                         ->with('invoice_items', 'client')
-                        ->orderBy('created_at', 'desc');
+                        ->orderBy('updated_at', 'desc');
 
         // Filter by invoice number
         if ($invoiceNumber = Input::get('invoice_number')) {
@@ -73,11 +73,11 @@ class InvoiceApiController extends BaseAPIController
             $invoices->where('invoice_status_id', '>=', $statusId);
         }
 
-        if (request()->has('is_recurring')) {
+        if (request()->filled('is_recurring')) {
             $invoices->where('is_recurring', '=', request()->is_recurring);
         }
 
-        if (request()->has('invoice_type_id')) {
+        if (request()->filled('invoice_type_id')) {
             $invoices->where('invoice_type_id', '=', request()->invoice_type_id);
         }
 

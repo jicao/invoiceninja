@@ -245,37 +245,91 @@ class Account extends Eloquent
     ];
 
     public static $customLabels = [
+        'address1',
+        'address2',
+        'amount',
+        'amount_paid',
+        'balance',
         'balance_due',
+        'blank',
+        'city_state_postal',
+        'client_name',
+        'company_name',
+        'contact_name',
+        'country',
         'credit_card',
+        'credit_date',
+        'credit_issued_to',
+        'credit_note',
+        'credit_number',
+        'credit_to',
+        'custom_value1',
+        'custom_value2',
+        'date',
         'delivery_note',
         'description',
+        'details',
         'discount',
         'due_date',
-        'gateway_fee_item',
+        'email',
+        'from',
         'gateway_fee_description',
+        'gateway_fee_discount_description',
+        'gateway_fee_item',
         'hours',
         'id_number',
         'invoice',
         'invoice_date',
+        'invoice_due_date',
+        'invoice_issued_to',
+        'invoice_no',
         'invoice_number',
+        'invoice_to',
+        'invoice_total',
         'item',
         'line_total',
+        'method',
         'outstanding',
         'paid_to_date',
         'partial_due',
+        'payment_date',
+        'phone',
         'po_number',
+        'postal_city_state',
+        'product_key',
         'quantity',
         'quote',
         'quote_date',
+        'quote_due_date',
+        'quote_issued_to',
+        'quote_no',
         'quote_number',
+        'quote_to',
         'rate',
+        'reference',
         'service',
+        'statement',
+        'statement_date',
+        'statement_issued_to',
+        'statement_to',
         'subtotal',
+        'surcharge',
         'tax',
+        'tax_invoice',
+        'tax_quote',
+        'taxes',
         'terms',
+        'to',
+        'total',
         'unit_cost',
         'valid_until',
         'vat_number',
+        'website',
+        'work_phone',
+        'your_credit',
+        'your_invoice',
+        'your_quote',
+        'your_statement',
     ];
 
     public static $customMessageTypes = [
@@ -366,6 +420,14 @@ class Account extends Eloquent
     public function tax_rates()
     {
         return $this->hasMany('App\Models\TaxRate');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function task_statuses()
+    {
+        return $this->hasMany('App\Models\TaskStatus')->orderBy('sort_order');
     }
 
     /**
@@ -1818,6 +1880,17 @@ class Account extends Eloquent
     public function getPrimaryAccount()
     {
         return $this->company->accounts()->orderBy('id')->first();
+    }
+
+    public function financialYearStartMonth()
+    {
+        if (! $this->financial_year_start) {
+            return 1;
+        }
+
+        $yearStart = Carbon::parse($this->financial_year_start);
+
+        return $yearStart ? $yearStart->month : 1;
     }
 
     public function financialYearStart()

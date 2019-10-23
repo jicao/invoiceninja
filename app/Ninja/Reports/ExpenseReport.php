@@ -21,6 +21,10 @@ class ExpenseReport extends AbstractReport
             'public_notes' => ['columnSelector-false'],
             'private_notes' => ['columnSelector-false'],
             'user' => ['columnSelector-false'],
+            'payment_date' => ['columnSelector-false'],
+            'payment_type' => ['columnSelector-false'],
+            'payment_reference' => ['columnSelector-false'],
+
         ];
 
         $user = auth()->user();
@@ -87,12 +91,15 @@ class ExpenseReport extends AbstractReport
             $row = [
                 $expense->vendor ? ($this->isExport ? $expense->vendor->name : $expense->vendor->present()->link) : '',
                 $expense->client ? ($this->isExport ? $expense->client->getDisplayName() : $expense->client->present()->link) : '',
-                $this->isExport ? $expense->present()->expense_date : link_to($expense->present()->url, $expense->present()->expense_date),
+                $this->isExport ? $expense->expense_date : link_to($expense->present()->url, $expense->present()->expense_date),
                 $expense->present()->category,
                 Utils::formatMoney($amount, $expense->expense_currency_id),
                 $expense->public_notes,
                 $expense->private_notes,
                 $expense->user->getDisplayName(),
+                $expense->present()->payment_date(),
+                $expense->present()->payment_type(),
+                $expense->transaction_reference,
             ];
 
             if ($account->customLabel('expense1')) {

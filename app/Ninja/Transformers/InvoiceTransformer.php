@@ -121,7 +121,7 @@ class InvoiceTransformer extends EntityTransformer
             'partial' => (float) ($invoice->partial ?: 0.0),
             'partial_due_date' => $invoice->partial_due_date ?: '',
             'has_tasks' => (bool) $invoice->has_tasks,
-            'auto_bill' => (bool) $invoice->auto_bill,
+            'auto_bill' => (int) $invoice->auto_bill,
             'custom_value1' => (float) $invoice->custom_value1,
             'custom_value2' => (float) $invoice->custom_value2,
             'custom_taxes1' => (bool) $invoice->custom_taxes1,
@@ -133,6 +133,7 @@ class InvoiceTransformer extends EntityTransformer
             'is_quote' => (bool) $invoice->isType(INVOICE_TYPE_QUOTE), // Temp to support mobile app
             'is_public' => (bool) $invoice->is_public,
             'filename' => $invoice->getFileName(),
+            'invoice_design_id' => (int) $invoice->invoice_design_id,
         ]);
     }
 }
