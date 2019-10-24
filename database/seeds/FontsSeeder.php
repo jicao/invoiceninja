@@ -10,10 +10,20 @@ class FontsSeeder extends Seeder
 
         $this->createFonts();
     }
-
     private function createFonts()
     {
         $fonts = [
+            [
+                'folder' => 'khmer_os',
+                'name' => 'Khmer',
+                'css_stack' => "'Battambang', cursive",
+                'google_font' => 'Battambang:400,700,900,100',
+                'normal' => 'KhmerOS_battambang.ttf',
+                'bold' => 'KhmerOS_battambang.ttf',
+                'italics' => 'KhmerOS_battambang.ttf',
+                'bolditalics' => 'KhmerOS_battambang.ttf',
+                'sort_order' => 99,
+            ],
             [
                 'folder' => 'roboto',
                 'name' => 'Roboto',
