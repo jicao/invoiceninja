@@ -75,7 +75,7 @@ Troubleshooting
 - If you're using a custom design try using a standard one, if the PDF is outside the printable area it can fail.
 - If you're using a non-English language try changing to English.
 - It may help to use the `pre-compiled binary from phantomjs.org <https://www.invoiceninja.com/forums/topic/local-phantomjs-pdfs-not-attaching-phantomjs-cloud-works/#post-17256>`_.
-- If all else fails you can `try changing the code <https://www.invoiceninja.com/forums/topic/attach-pdfs-to-emails-using-https-domain/>`_ to prevent SSL checks.
+- If all else fails you can `try changing the code <https://github.com/invoiceninja/invoiceninja/issues/3780#issuecomment-1022200349>`_ to prevent SSL checks.
 
 Custom Fonts
 """"""""""""
